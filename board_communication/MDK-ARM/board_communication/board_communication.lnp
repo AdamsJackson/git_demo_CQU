@@ -1,0 +1,27 @@
+--cpu Cortex-M3
+"board_communication\startup_stm32f103xb.o"
+"board_communication\main.o"
+"board_communication\gpio.o"
+"board_communication\dma.o"
+"board_communication\usart.o"
+"board_communication\stm32f1xx_it.o"
+"board_communication\stm32f1xx_hal_msp.o"
+"board_communication\stm32f1xx_hal_gpio_ex.o"
+"board_communication\stm32f1xx_hal_tim.o"
+"board_communication\stm32f1xx_hal_tim_ex.o"
+"board_communication\stm32f1xx_hal_uart.o"
+"board_communication\stm32f1xx_hal.o"
+"board_communication\stm32f1xx_hal_rcc.o"
+"board_communication\stm32f1xx_hal_rcc_ex.o"
+"board_communication\stm32f1xx_hal_gpio.o"
+"board_communication\stm32f1xx_hal_dma.o"
+"board_communication\stm32f1xx_hal_cortex.o"
+"board_communication\stm32f1xx_hal_pwr.o"
+"board_communication\stm32f1xx_hal_flash.o"
+"board_communication\stm32f1xx_hal_flash_ex.o"
+"board_communication\stm32f1xx_hal_exti.o"
+"board_communication\system_stm32f1xx.o"
+--strict --scatter "board_communication\board_communication.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "board_communication.map" -o board_communication\board_communication.axf

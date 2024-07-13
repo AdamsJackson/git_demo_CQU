@@ -53,6 +53,7 @@ void UART_SendFloat(UART_HandleTypeDef *huart, float value, int precision);
 	float Voltage = 0.0f;
 	char Judgement[] = "This is a test!";
 	char ADC_information[] = "ADC_Value = ";
+  char attempt[] = "git is sb";
 /* USER CODE END 0 */
 
 /**
@@ -90,6 +91,7 @@ int main(void)
 	
 	
 	UART_SendString(&huart1,Judgement);
+  UART_SendString(&huart1,attempt);
   /* USER CODE END 2 */
 
   /* Infinite loop */
