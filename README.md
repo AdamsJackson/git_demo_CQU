@@ -45,4 +45,5 @@ A板存在四个可控的电源接口（需要对PH2-PH5这四个接口使能）
 打开cubemx.注意配置can的时候要保证一下10^6 bit/s(168MHZ-CLK,3-10-3)
 开启RX0的中断，从而调用回调函数，这个回调函数的寻找注意是0号FIFO，因为再初始化配置的时候用的是can_filter_st.FilterFIFOAssignment = CAN_RX_FIFO0;
 我们可以知道，所有的接收端rx中断是当接收到消息就会触发的。
+在回调函数里我们获得对应电机的一些物理量 --> 用于位置环/速度环的处理
 see you tomorrow
