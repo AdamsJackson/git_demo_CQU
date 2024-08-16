@@ -38,20 +38,54 @@ void PID_init(pid_type_def *pid, uint8_t mode, /*const fp32 PID_speed[3],const f
     pid->error[0] = pid->error[1] = pid->error[2] = pid->Pout = pid->Iout = pid->Dout = pid->out = 0.0f;
 }		
 
-fp32 PID_calc(pid_type_def *pid, fp32 ref, fp32 set)
-{//现在的问题是对PID的计算？目前没有找到合适的。
-    if (pid == NULL)
-    {
+//fp32 PID_calc(pid_type_def *pid, fp32 ref, fp32 set)
+//{//现在的问题是对PID的计算？目前没有找到合适的。
+//    if (pid == NULL)
+//    {
+//        return 0.0f;
+//    }
+
+//    pid->error[2] = pid->error[1];
+//    pid->error[1] = pid->error[0];
+//    pid->set = set;
+//    pid->fdb = ref;
+//    pid->error[0] = set - ref;
+//    if (pid->mode == PID_POSITION)
+//    {
+//        pid->Pout = pid->Kp_speed * pid->error[0];
+//        pid->Iout += pid->Ki_speed * pid->error[0];
+//        pid->Dbuf[2] = pid->Dbuf[1];
+//        pid->Dbuf[1] = pid->Dbuf[0];
+//        pid->Dbuf[0] = (pid->error[0] - pid->error[1]);
+//        pid->Dout = pid->Kd_speed * pid->Dbuf[0];
+//        LimitMax(pid->Iout, pid->max_iout);
+//        pid->out = pid->Pout + pid->Iout + pid->Dout;
+//        LimitMax(pid->out, pid->max_out);
+//    }
+//    else if (pid->mode == PID_DELTA)
+//    {
+//        pid->Pout = pid->Kp_speed * (pid->error[0] - pid->error[1]);
+//        pid->Iout = pid->Ki_speed * pid->error[0];
+//        pid->Dbuf[2] = pid->Dbuf[1];
+//        pid->Dbuf[1] = pid->Dbuf[0];
+//        pid->Dbuf[0] = (pid->error[0] - 2.0f * pid->error[1] + pid->error[2]);
+//        pid->Dout = pid->Kd_speed * pid->Dbuf[0];
+//        pid->out += pid->Pout + pid->Iout + pid->Dout;
+//        LimitMax(pid->out, pid->max_out);
+//    }
+//    return pid->out;
+//}
+
+fp32 PID_calc(pid_type_def *pid, fp32 ref, fp32 set) {
+    if (pid == NULL) {
         return 0.0f;
     }
-
     pid->error[2] = pid->error[1];
     pid->error[1] = pid->error[0];
     pid->set = set;
     pid->fdb = ref;
     pid->error[0] = set - ref;
-    if (pid->mode == PID_POSITION)
-    {
+    if (pid->mode == PID_POSITION) {
         pid->Pout = pid->Kp_speed * pid->error[0];
         pid->Iout += pid->Ki_speed * pid->error[0];
         pid->Dbuf[2] = pid->Dbuf[1];
@@ -61,9 +95,7 @@ fp32 PID_calc(pid_type_def *pid, fp32 ref, fp32 set)
         LimitMax(pid->Iout, pid->max_iout);
         pid->out = pid->Pout + pid->Iout + pid->Dout;
         LimitMax(pid->out, pid->max_out);
-    }
-    else if (pid->mode == PID_DELTA)
-    {
+    } else if (pid->mode == PID_DELTA) {
         pid->Pout = pid->Kp_speed * (pid->error[0] - pid->error[1]);
         pid->Iout = pid->Ki_speed * pid->error[0];
         pid->Dbuf[2] = pid->Dbuf[1];
@@ -76,6 +108,15 @@ fp32 PID_calc(pid_type_def *pid, fp32 ref, fp32 set)
     return pid->out;
 }
 
+			// motor 1 ecd rpm
+fp32 PID_CascadeCalc(pid_type_def *pid, fp32 angle_ref, fp32 angle_fdb, fp32 speed_fdb) {
+    
+															// 				ecd				1
+    fp32 angle_out = PID_calc(pid, angle_fdb, angle_ref);
+    pid->out = PID_calc(pid, speed_fdb, angle_out);
+	 
+		return pid->out;
+}
 void PID_clear(pid_type_def *pid)
 {
     if (pid == NULL)

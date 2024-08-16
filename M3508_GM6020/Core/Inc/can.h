@@ -58,15 +58,16 @@ typedef struct
     int16_t given_current;//电流值
     uint8_t temperate;    //电机温度
     int16_t last_ecd;     //上次转速
-} motor_measure_t;    
+} motor_measure_t;  
+
 /* USER CODE END Private defines */
 
 void MX_CAN1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 void CAN_cmd_chassis(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4);
-void CAN_cmd_Gamble (int16_t v1,int16_t v2, int16_t v3);
-const motor_measure_t *get_chassis_motor_measure_point(uint8_t i);
+void CAN_cmd_Gamble (int16_t v1,int16_t v2, int16_t v3, int16_t v4);
+motor_measure_t *get_chassis_motor_measure_point(uint8_t i);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

@@ -45,21 +45,23 @@
 
 /* USER CODE BEGIN PV */
 //pid_type_def motor_pid[7];
-const motor_measure_t *motor_data;
+motor_measure_t *motor_data;
+motor_measure_t *motor_6020;
 
-pid_type_def motor_pid[7]; 
-
+pid_type_def motor_pid[7];   //对多个电机读取pid
+pid_type_def gamble_demo;
 //M3508的PID设置
 const fp32 KP_M3508 = 20.0;
 const fp32 KI_M3508 = 0.0;
 const fp32 KD_M3508 = 0.0;
-const int set_speed = 0;
+const int set_speed = 10;
 
 //GM6020的PID设置
-const fp32 KP_GM6020 = 20.0;
-const fp32 KI_GM6020 = 0.0;
-const fp32 KD_GM6020 = 0.0;
-fp32 abc[3] = {10,0.1,0};
+const fp32 KP_GM6020 = 10.0;
+const fp32 KI_GM6020 = 0.5;
+const fp32 KD_GM6020 = 0.1;
+
+const fp32 set_angle = 0.5;
 
 /* USER CODE END PV */
 
@@ -104,36 +106,58 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
-		motor_data = get_chassis_motor_measure_point(0);
+	
 		
+		PID_init(&motor_pid[4],PID_POSITION,10000,1000);
+			motor_pid[4].Kp_speed = KP_GM6020;
+			motor_pid[4].Ki_speed = KI_GM6020;
+			motor_pid[4].Kd_speed = KD_GM6020;
+			motor_pid[4].Kp_angle = KP_GM6020;
+			motor_pid[4].Ki_angle = KI_GM6020;
+			motor_pid[4].Kd_angle = KD_GM6020;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
+  {motor_data = get_chassis_motor_measure_point(4);
     /* USER CODE END WHILE */
-		for(int i = 0; i<7; i++)
-	{
-		motor_data = get_chassis_motor_measure_point(i);
-		if(i<4){
-			PID_init(&motor_pid[i],PID_POSITION,10000,100);
-			motor_pid[i].Kp_speed = KP_M3508;
-			motor_pid[i].Ki_speed = KI_M3508;
-			motor_pid[i].Kd_speed = KD_M3508;
-			
-			motor_pid[i].out =PID_calc(&motor_pid[i],motor_data -> speed_rpm, set_speed);
-		}
-		else{
-			PID_init(&motor_pid[i],PID_POSITION,10000,100);
-			motor_pid[i].Kp_speed = KP_GM6020;
-			motor_pid[i].Ki_speed = KI_GM6020;
-			motor_pid[i].Kd_speed = KD_GM6020;
-		}
-		
-	}
+		/*对3508进行pid计算*/
+		fp32 angle_out = PID_calc(&motor_pid[4], motor_data->ecd, set_angle);
+		fp32 speed_out = PID_calc(&motor_pid[4], motor_data->speed_rpm, angle_out);
+			//motor_pid[4].out = PID_CascadeCalc(&motor_pid[4], set_angle, motor_data->ecd, motor_data->speed_rpm);
+		CAN_cmd_Gamble(speed_out,10,10,10);
+		//		for(int i = 0; i<7; i++)
+//	{
+//		motor_data = get_chassis_motor_measure_point(i);
+//		if(i<4){
+//			PID_init(&motor_pid[i],PID_POSITION,10000,100);
+//			motor_pid[i].Kp_speed = KP_M3508;
+//			motor_pid[i].Ki_speed = KI_M3508;
+//			motor_pid[i].Kd_speed = KD_M3508;
+//			
+//			motor_pid[i].out = PID_calc(&motor_pid[i],motor_data -> speed_rpm, set_speed);
+//		}
+//		else{
+//			PID_init(&motor_pid[i],PID_POSITION,25000,100);
+//			motor_pid[i].Kp_speed = KP_GM6020;
+//			motor_pid[i].Ki_speed = KI_GM6020;
+//			motor_pid[i].Kd_speed = KD_GM6020;
+//			motor_pid[i].Kp_angle = KP_GM6020;
+//			motor_pid[i].Ki_angle = KI_GM6020;
+//			motor_pid[i].Kd_angle = KD_GM6020;
+//			// motor 1 ecd rpm
+//			motor_pid[i].out = PID_CascadeCalc(&motor_pid[i], set_angle, motor_data->ecd, motor_data->speed_rpm);
+//			if (i == 4)
+//			{
+//					motor_6020 = motor_data;
+//			}
+//		}
+//		
+//	}
 		CAN_cmd_chassis(motor_pid[0].out,0,0,0/*motor_pid[1].out,motor_pid[2].out,motor_pid[3].out */);
-		CAN_cmd_Gamble(100,10,10);
+		
+		HAL_Delay(5);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

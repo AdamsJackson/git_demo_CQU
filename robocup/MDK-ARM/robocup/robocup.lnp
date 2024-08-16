@@ -1,0 +1,27 @@
+--cpu=Cortex-M4.fp
+"robocup\startup_stm32f407xx.o"
+"robocup\main.o"
+"robocup\gpio.o"
+"robocup\tim.o"
+"robocup\stm32f4xx_it.o"
+"robocup\stm32f4xx_hal_msp.o"
+"robocup\stm32f4xx_hal_tim.o"
+"robocup\stm32f4xx_hal_tim_ex.o"
+"robocup\stm32f4xx_hal_rcc.o"
+"robocup\stm32f4xx_hal_rcc_ex.o"
+"robocup\stm32f4xx_hal_flash.o"
+"robocup\stm32f4xx_hal_flash_ex.o"
+"robocup\stm32f4xx_hal_flash_ramfunc.o"
+"robocup\stm32f4xx_hal_gpio.o"
+"robocup\stm32f4xx_hal_dma_ex.o"
+"robocup\stm32f4xx_hal_dma.o"
+"robocup\stm32f4xx_hal_pwr.o"
+"robocup\stm32f4xx_hal_pwr_ex.o"
+"robocup\stm32f4xx_hal_cortex.o"
+"robocup\stm32f4xx_hal.o"
+"robocup\stm32f4xx_hal_exti.o"
+"robocup\system_stm32f4xx.o"
+--strict --scatter "robocup\robocup.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "robocup.map" -o robocup\robocup.axf

@@ -169,9 +169,9 @@ void CAN_cmd_chassis(int16_t motor1, int16_t motor2, int16_t motor3, int16_t mot
 	HAL_CAN_AddTxMessage(&hcan1,&chassis_tx_message,chassis_can_send_data,(uint32_t*)CAN_TX_MAILBOX0);
  }
 //云台6020控制
-void CAN_cmd_Gamble(int16_t v1, int16_t v2, int16_t v3)
+void CAN_cmd_Gamble(int16_t v1, int16_t v2, int16_t v3, int16_t v4)
 {
-	gamble_tx_message.StdId = 0x2ff;
+	gamble_tx_message.StdId = 0x1ff;
 	gamble_tx_message.IDE = CAN_ID_STD;
 	gamble_tx_message.RTR = CAN_RTR_DATA;
 	gamble_tx_message.DLC = 8;
@@ -179,11 +179,13 @@ void CAN_cmd_Gamble(int16_t v1, int16_t v2, int16_t v3)
 	gamble_can_send_data[0] = (v1 >> 8)&0xff;
 	gamble_can_send_data[1] = 		(v1)&0xff;
 	gamble_can_send_data[2] = (v2 >> 8)&0xff;
-  gamble_can_send_data[3] =    (v2)&0xff;
+  gamble_can_send_data[3] =    (v2)&0xff; 
   gamble_can_send_data[4] = (v3 >> 8)&0xff;
   gamble_can_send_data[5] =    (v3)&0xff;
+	gamble_can_send_data[6] = (v4 >> 8)&0xff;
+	gamble_can_send_data[7] = (v4)&0xff;
 	
-	HAL_CAN_AddTxMessage(&hcan1, &gamble_tx_message,gamble_can_send_data,(uint32_t*)CAN_TX_MAILBOX0);
+	HAL_CAN_AddTxMessage(&hcan1, &gamble_tx_message, gamble_can_send_data,(uint32_t*)CAN_TX_MAILBOX0);
 }
 //接收端中断回调
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
@@ -209,7 +211,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 		}
 	}
 }
-const motor_measure_t *get_chassis_motor_measure_point(uint8_t i)
+motor_measure_t *get_chassis_motor_measure_point(uint8_t i)
 {
     return &motor_chassis[(i & 0x03)];			
 }
