@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "car.h"
+#include "sound.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -74,7 +75,8 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  
+	
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -89,18 +91,10 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
+	car_init();
+  sound_init();
 	pwm_start();
-	hands();
-	go();
-	HAL_Delay(2000);
-	turn_left();
-	HAL_Delay(3000);
-	stop();
-	HAL_Delay(50);
-	turn_right();
-	HAL_Delay(5000);
 	
-	stop();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -108,7 +102,14 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+		//E18-D80NK 前方有障碍物 红灯亮 为reset；反之则为set
+		uint32_t pin_value = HAL_GPIO_ReadPin(PE_Switch1_GPIO_Port,PE_Switch1_Pin);
+		if(pin_value == GPIO_PIN_SET){
+			hands(); //
+		}else{
+			sound_play(7);
+		}
+		HAL_Delay(5000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

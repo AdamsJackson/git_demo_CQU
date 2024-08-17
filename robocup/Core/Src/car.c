@@ -1,5 +1,15 @@
 #include "car.h"
 
+void car_init(void){
+	
+	HAL_GPIO_WritePin(ina1_GPIO_Port,ina1_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(inb1_GPIO_Port,inb1_Pin,GPIO_PIN_RESET);  
+
+	HAL_GPIO_WritePin(ina2_GPIO_Port,ina2_Pin,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(inb2_GPIO_Port,inb2_Pin,GPIO_PIN_RESET);
+}
+
+
 void go(void){
 
 	HAL_GPIO_WritePin(ina1_GPIO_Port,ina1_Pin,GPIO_PIN_RESET);

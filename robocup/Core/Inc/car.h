@@ -11,11 +11,13 @@ extern "C" {
 #include "main.h"
 #include "tim.h"
 #include "gpio.h"
+void car_init(void);
+void go(void);
 void stop(void);
 void turn_left(void);
 void turn_right(void);
 void hands(void);
-void go(void);
+
 	
 	
 #ifdef __cplusplus

@@ -11,8 +11,8 @@ extern "C" {
 #include "main.h"
 #include "gpio.h"
 	
-void sound_init();
-void sound_play(uint16_t A);
+void sound_init(void);
+void sound_play(int A);
 #ifdef __cplusplus
 }
 #endif
