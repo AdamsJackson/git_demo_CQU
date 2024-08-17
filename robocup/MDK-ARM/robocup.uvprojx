@@ -391,6 +391,21 @@
           <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/main.c</FilePath>
+            </File>
+            <File>
+              <FileName>tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/gpio.c</FilePath>
+            </File>
+            <File>
               <FileName>car.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Core\Src\car.c</FilePath>
@@ -401,19 +416,9 @@
               <FilePath>..\Core\Src\sound.c</FilePath>
             </File>
             <File>
-              <FileName>main.c</FileName>
+              <FileName>line.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Core/Src/main.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/tim.c</FilePath>
+              <FilePath>..\Core\Src\line.c</FilePath>
             </File>
             <File>
               <FileName>stm32f4xx_it.c</FileName>

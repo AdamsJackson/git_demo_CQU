@@ -115,7 +115,15 @@ void Error_Handler(void);
 #define PE_Switch2_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-
+extern int total;  
+extern int D1; 
+extern int D2;
+extern int D3;
+extern int D4;
+extern int D5;
+extern int D6;
+extern int D7;
+extern int D8;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

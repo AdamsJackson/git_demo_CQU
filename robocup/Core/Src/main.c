@@ -25,11 +25,21 @@
 /* USER CODE BEGIN Includes */
 #include "car.h"
 #include "sound.h"
+#include "key.h"
+#include "line.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+int total = 0;
+int D1 = 0; 
+int D2 = 0;
+int D3 = 0;
+int D4 = 0;
+int D5 = 0;
+int D6 = 0;
+int D7 = 0;
+int D8 = 0;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -101,15 +111,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		total=turn_check();
+		turn(total);
     /* USER CODE END WHILE */
-		//E18-D80NK 前方有障碍物 红灯亮 为reset；反之则为set
-		uint32_t pin_value = HAL_GPIO_ReadPin(PE_Switch1_GPIO_Port,PE_Switch1_Pin);
-		if(pin_value == GPIO_PIN_SET){
-			hands(); //
-		}else{
-			sound_play(7);
-		}
-		HAL_Delay(5000);
+		
+			
+		
+		
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

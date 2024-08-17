@@ -3,6 +3,7 @@
         "sound.h": "c",
         "gpio.h": "c",
         "main.h": "c",
-        "line.h": "c"
+        "line.h": "c",
+        "key.h": "c"
     }
 }

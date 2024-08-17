@@ -34,3 +34,5 @@ robocup\main.o: ../Core/Inc/tim.h
 robocup\main.o: ../Core/Inc/gpio.h
 robocup\main.o: ../Core/Inc/car.h
 robocup\main.o: ../Core/Inc/sound.h
+robocup\main.o: ../Core/Inc/key.h
+robocup\main.o: ../Core/Inc/line.h
