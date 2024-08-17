@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "car.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

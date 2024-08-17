@@ -42,6 +42,7 @@ void turn_right(void){
 	HAL_GPIO_WritePin(ina2_GPIO_Port,ina2_Pin,GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(inb2_GPIO_Port,inb2_Pin,GPIO_PIN_SET);
 	__HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_1,200);  //inb1 inb2 -> channel 1  right
+	
 }
 
 void hands(void){

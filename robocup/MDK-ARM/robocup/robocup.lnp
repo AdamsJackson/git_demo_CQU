@@ -5,6 +5,7 @@
 "robocup\tim.o"
 "robocup\stm32f4xx_it.o"
 "robocup\stm32f4xx_hal_msp.o"
+"robocup\car.o"
 "robocup\stm32f4xx_hal_tim.o"
 "robocup\stm32f4xx_hal_tim_ex.o"
 "robocup\stm32f4xx_hal_rcc.o"
